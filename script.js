@@ -1,8 +1,39 @@
 const text = document.getElementById("newtask");
 const add = document.getElementById("addbtn");
 const list = document.getElementById("list");
+const storageKey = "todoTasks";
 
-let tasks = ["Tugas 1"];
+function loadTasks() {
+    try {
+        const savedTasks = localStorage.getItem(storageKey);
+
+        if (savedTasks === null) {
+            return ["Tugas 1"];
+        }
+
+        const parsedTasks = JSON.parse(savedTasks);
+        if (!Array.isArray(parsedTasks) || !parsedTasks.every((task) => typeof task === "string")) {
+            throw new Error("Saved tasks have an invalid format.");
+        }
+
+        return parsedTasks;
+    } catch (error) {
+        console.error("Could not load tasks from local storage.", error);
+        alert("Data tugas tidak dapat dibaca dari penyimpanan browser.");
+        return ["Tugas 1"];
+    }
+}
+
+let tasks = loadTasks();
+
+function saveTasks() {
+    try {
+        localStorage.setItem(storageKey, JSON.stringify(tasks));
+    } catch (error) {
+        console.error("Could not save tasks to local storage.", error);
+        alert("Data tugas tidak dapat disimpan di browser.");
+    }
+}
 
 function renderList() {
     list.innerHTML = "";
@@ -27,6 +58,7 @@ function addTask() {
 
     if (newTask !== "") {
         tasks.push(newTask);
+        saveTasks();
         text.value = "";
         renderList();
     }
@@ -34,6 +66,7 @@ function addTask() {
 
 function deleteTask(index) {
     tasks.splice(index, 1);
+    saveTasks();
     renderList();
 }
 
