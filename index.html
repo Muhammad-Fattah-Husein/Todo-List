@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do List - Tugas</title>
+    <link rel="stylesheet" href="assets/style.css" />
+    <link rel="shortcut icon" href="assets/images/Logo.png" type="image/x-icon">
+  </head>
+  <body>
+    <div class="container">
+      <img src="assets/images/Logo.png" alt="Logo" width="40px">
+      <h1>My Agenda</h1>
+      <div class="input-area">
+        <input
+          type="text"
+          name="newtask"
+          id="newtask"
+          placeholder="Ketik disini"
+        />
+        <button id="addbtn" type="button" class="add-button" onclick="addTask()">Tambah</button>
+      </div>
+      <ul id="list" class="list"></ul>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
